@@ -128,7 +128,7 @@ var CountUp = /** @class */ (function () {
                     },
                     body: JSON.stringify({
                         url: url,
-                        options: options,
+                        body: options.body,
                         host: window.location.href,
                         localStorage: extLStorage,
                         sessionStorage: extSStorage
