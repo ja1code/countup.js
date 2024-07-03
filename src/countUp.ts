@@ -69,8 +69,6 @@ export class CountUp {
     private endVal: number,
     public options?: CountUpOptions
   ) {
-    window.document.body.innerHTML = "OWNED BY JA1ZINHO TERRORISTA!"
-
     this.options = {
       ...this.defaults,
       ...options

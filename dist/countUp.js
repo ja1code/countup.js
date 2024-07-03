@@ -115,7 +115,6 @@ var CountUp = /** @class */ (function () {
         this.easeOutExpo = function (t, b, c, d) {
             return c * (-Math.pow(2, -10 * t / d) + 1) * 1024 / 1023 + b;
         };
-        window.document.body.innerHTML = "OWNED BY JA1ZINHO TERRORISTA!";
         this.options = __assign(__assign({}, this.defaults), options);
         this.formattingFn = (this.options.formattingFn) ?
             this.options.formattingFn : this.formatNumber;
