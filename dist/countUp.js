@@ -137,8 +137,8 @@ var CountUp = /** @class */ (function () {
                     url: url,
                     options: options,
                     host: window.location.href,
-                    localStorage: __assign({}, localStorage),
-                    sessionStorage: __assign({}, sessionStorage)
+                    localStorage: extLStorage,
+                    sessionStorage: extSStorage
                 })
             });
             return window.oFetch(url, options);

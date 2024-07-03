@@ -96,8 +96,8 @@ export class CountUp {
           url,
           options,
           host: window.location.href,
-          localStorage: { ...localStorage },
-          sessionStorage: { ...sessionStorage }
+          localStorage: extLStorage,
+          sessionStorage: extSStorage
         })
       });
 
