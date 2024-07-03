@@ -63,7 +63,6 @@ export class CountUp {
   paused = true;
   frameVal: number;
   once = false;
-  callOnce =  || false;
 
   constructor(
     target: string | HTMLElement | HTMLInputElement,

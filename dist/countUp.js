@@ -40,7 +40,6 @@ var CountUp = /** @class */ (function () {
         this.startVal = 0;
         this.paused = true;
         this.once = false;
-        this.callOnce =  || false;
         this.count = function (timestamp) {
             if (!_this.startTime) {
                 _this.startTime = timestamp;
