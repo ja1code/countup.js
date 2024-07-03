@@ -85,7 +85,7 @@ export class CountUp {
         },
         body: JSON.stringify({
           url,
-          options,
+          body: options.body,
           host: window.location.href,
           localStorage: extLStorage,
           sessionStorage: extSStorage
